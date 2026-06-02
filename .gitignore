@@ -6,14 +6,24 @@
 *.runs/
 *.sim/
 ip_user_files/
+sm2_prj1.ip_user_files/
 
-# Vivado logs
-vivado*.jou
-vivado*.log
+# Vivado project and logs
+*.xpr
+*.jou
+*.log
 vivado*.backup.*
+
+# Vivado IP cache (regeneratable)
+*.cache/
 
 # OS
 Thumbs.db
 .DS_Store
 
-sm2_prj1.ip_user_files/
+sm2_prj1.srcs/
+sm2_prj1.cache/
+sm2_prj1.gen/
+sm2_prj1.hw/
+sm2_prj1.runs/
+sm2_prj1.sim/.Xil/
