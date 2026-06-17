@@ -1,8 +1,8 @@
 # SM2-FPGA
 
-**FPGA implementation of SM2 elliptic curve cryptography (GB/T 32918)**
+**FPGA arithmetic core for the SM2 elliptic curve (GB/T 32918)**
 
-> **SM2** is the Chinese national standard for public-key cryptography based on elliptic curves. This project implements the core 256-bit modular arithmetic units required for SM2 on FPGA.
+> **SM2** is the Chinese national standard for public-key cryptography based on elliptic curves. This repository currently contains the FPGA-side 256-bit modular arithmetic and point-operation building blocks used by the SM2 curve. It is not a complete SM2 encryption, signature, or key-exchange implementation.
 
 ## Target Board
 
@@ -17,7 +17,7 @@ Tested with **Vivado 2023.1**.
 ```
 SM2-FPGA/
 ├── rtl/                # RTL implementation (SystemVerilog)
-├── sim/                # Simulation testbenches
+├── sim/                # Simulation testbenches and board-level demo top
 ├── ip/                 # Vivado IP core configurations
 ├── constr/             # Pin & timing constraints
 ├── scripts/            # Project recreation scripts
@@ -33,11 +33,12 @@ SM2-FPGA/
 - [x] **mod_subtracter_256b** - 256-bit modular subtracter
 - [x] **mul_256b** - 256-bit multiplier
 - [x] **mont_mul_256b** - 256-bit Montgomery multiplier (core of ECC)
-- [x] **c1_cal** - SM2 point addition & doubling
+- [x] **c1_cal** - SM2 curve point-operation datapath used by the C1 calculation experiment
+- [x] **c1_test** - RK-ZYNQ7100-F board-level demo top for `c1_cal`
 
 ### TODO
 
-- [ ] SM2 scalar multiplication
+- [ ] Complete/generalized SM2 scalar multiplication flow
 - [ ] SM2 key generation
 - [ ] SM2 encryption / decryption
 - [ ] SM2 signature & verification
@@ -66,7 +67,7 @@ cd <path-to>/SM2-FPGA/scripts
 source create_project.tcl
 ```
 
-The script will create a `sm2_prj1/` directory next to `scripts/` with the full Vivado project.
+The script will create `build/sm2_prj1/` under the repository root with the full Vivado project.
 
 ### Run Simulation
 
@@ -82,7 +83,9 @@ In Vivado, set the desired testbench as top (under Simulation Sources) and run s
 
 ## SM2-FPGA (中文说明)
 
-**SM2 椭圆曲线密码算法 FPGA 实现 (GB/T 32918)**
+**面向 SM2 椭圆曲线的 FPGA 算术核心 (GB/T 32918)**
+
+当前仓库主要包含 SM2 曲线所需的 256-bit 模运算和点运算硬件模块，以及面向 RK-ZYNQ7100-F 的实验顶层。它还不是完整的 SM2 加密、签名或密钥交换协议实现。
 
 ## 目标平台
 
@@ -97,7 +100,7 @@ In Vivado, set the desired testbench as top (under Simulation Sources) and run s
 ```
 SM2-FPGA/
 ├── rtl/                # RTL 实现代码 (SystemVerilog)
-├── sim/                # 仿真测试文件
+├── sim/                # 仿真测试文件和板级实验顶层
 ├── ip/                 # Vivado IP 核配置文件
 ├── constr/             # 管脚及时序约束
 ├── scripts/            # 工程重建脚本
@@ -113,11 +116,12 @@ SM2-FPGA/
 - [x] **mod_subtracter_256b** - 256-bit 模减法器
 - [x] **mul_256b** - 256-bit 乘法器
 - [x] **mont_mul_256b** - 256-bit Montgomery 模乘器（ECC 核心运算）
-- [x] **c1_cal** - SM2 点加 / 倍点运算
+- [x] **c1_cal** - C1 计算实验使用的 SM2 曲线点运算数据通路
+- [x] **c1_test** - 面向 RK-ZYNQ7100-F 的 `c1_cal` 板级实验顶层
 
 ### 待实现
 
-- [ ] SM2 标量乘法
+- [ ] 完整/通用化的 SM2 标量乘法流程
 - [ ] SM2 密钥生成
 - [ ] SM2 加密/解密
 - [ ] SM2 签名/验签
@@ -141,7 +145,7 @@ cd <路径>/SM2-FPGA/scripts
 source create_project.tcl
 ```
 
-脚本会在 `scripts/` 同目录下创建 `sm2_prj1/` 文件夹，包含完整的 Vivado 工程。
+脚本会在仓库根目录下创建 `build/sm2_prj1/` 文件夹，包含完整的 Vivado 工程。
 
 ### 运行仿真
 
